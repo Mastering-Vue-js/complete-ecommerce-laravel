@@ -22,7 +22,6 @@ class Order extends Model
         'line2',
         'city',
         'country',
-        'zipcode',
         'notes'
     ];
 }
