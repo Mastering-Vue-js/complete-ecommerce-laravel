@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,6 @@ class ProductController extends Controller
             'price' => 'required',
             'stock' => 'required',
             'image' => 'required',
-            'status' => 'required',
             'category_id' => 'required'
         ]);
 
@@ -33,10 +33,12 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        $product->image = $image_name;
-        $product->status = $request->status;
+        $product->image = "images/".$image_name;
+        // $product->status = $request->status;
         $product->category_id = $request->category_id;
         $product->save();
+
+        $product->category = Category::find($request->category_id)->first();
 
         return $this->success('Product added successfully', $product);
     }
@@ -46,6 +48,7 @@ class ProductController extends Controller
         if (!$product) {
             return $this->error('Product not found', 404);
         }
+        unlink(public_path('images/' . $product->image));
         $product->delete();
         return $this->success('Product deleted successfully');
     }

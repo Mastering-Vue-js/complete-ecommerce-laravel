@@ -17,7 +17,6 @@ class CategoryController extends Controller
             'name' => 'required',
             'description' => 'required',
             'image' => 'required',
-            'status' => 'required'
         ]);
 
         // handle image upload
@@ -29,8 +28,8 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->description = $request->description;
-        $category->image = $image_name;
-        $category->status = $request->status;
+        $category->image = "images/".$image_name;
+        // $category->status = $request->status;
         $category->save();
 
         return $this->success('Category added successfully', $category);
@@ -41,6 +40,7 @@ class CategoryController extends Controller
         if (!$category) {
             return $this->error('Category not found', 404);
         }
+        unlink(public_path('images/' . $category->image));
         $category->delete();
         return $this->success('Category deleted successfully');
     }
