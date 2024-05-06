@@ -22,6 +22,10 @@ DB_USERNAME=<DATABASE-USER> #this is database user name
 DB_PASSWORD=<DATABASE-PASSWORD> #this is database password
 ```
 ### Run database migration
+Clear database first if you already setup the project
+```bash
+php artisan db:wipe
+```
 ```bash
 php artisan migrate --seed
 ```
