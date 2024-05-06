@@ -50,6 +50,14 @@ class ProductController extends Controller
         return $this->success('Product deleted successfully');
     }
 
+    public function getSingleProduct (Request $request, $id) {
+        $product = Product::with('category')->find($id);
+        if (!$product) {
+            return $this->error('Product not found', 404);
+        }
+        return $this->success('Product retrieved successfully', $product);
+    }
+
     public function updateProduct (Request $request) {
         $this->validate($request, [
             'product_id' => 'required',

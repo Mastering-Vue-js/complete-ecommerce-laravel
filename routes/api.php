@@ -27,6 +27,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::get('products', [ProductController::class, 'getProducts']);
+Route::get('products/{id}', [ProductController::class, 'getSingleProduct']);
 Route::get('categories', [CategoryController::class, 'getCategories']);
 
 Route::group(['prefix' => 'admin'], function () {
