@@ -13,15 +13,23 @@ class CartController extends Controller {
 
     public function addToCart(Request $request) {
 
-        $cart = new Cart();
-        $cart->user_id = $request->user()->id;
-        $cart->product_id = $request->product_id;
-        $cart->quantity = $request->quantity;
-        $cart->price = $request->price;
-        $cart->total = $request->quantity * $request->price;
-        $cart->save();
+        $existCart = Cart::where('user_id', $request->user()->id)->where('product_id', $request->product_id)->first();
 
-        return $this->success('Add to cart', $cart);
+        if($existCart) {
+            $existCart->quantity += $request->quantity;
+            $existCart->total = $existCart->quantity * $existCart->price;
+            $existCart->save();
+            return $this->success('Add to cart', $existCart);
+        }else {
+            $cart = new Cart();
+            $cart->user_id = $request->user()->id;
+            $cart->product_id = $request->product_id;
+            $cart->quantity = $request->quantity;
+            $cart->price = $request->price;
+            $cart->total = $request->quantity * $request->price;
+            $cart->save();
+            return $this->success('Add to cart', $cart);
+        }
     }
 
     public function updateCart(Request $request) {

@@ -6,14 +6,13 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
     public function getProducts(Request $request) {
         $products = Product::with('category')->get();
         return $this->success('Products retrieved successfully', $products);
     }
 
-    public function addProduct (Request $request) {
+    public function addProduct(Request $request) {
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -33,7 +32,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        $product->image = "images/".$image_name;
+        $product->image = "images/" . $image_name;
         // $product->status = $request->status;
         $product->category_id = $request->category_id;
         $product->save();
@@ -43,7 +42,7 @@ class ProductController extends Controller
         return $this->success('Product added successfully', $product);
     }
 
-    public function deleteProduct (Request $request, $id) {
+    public function deleteProduct(Request $request, $id) {
         $product = Product::find($id);
         if (!$product) {
             return $this->error('Product not found', 404);
@@ -53,7 +52,7 @@ class ProductController extends Controller
         return $this->success('Product deleted successfully');
     }
 
-    public function getSingleProduct (Request $request, $id) {
+    public function getSingleProduct(Request $request, $id) {
         $product = Product::with('category')->find($id);
         if (!$product) {
             return $this->error('Product not found', 404);
@@ -61,14 +60,13 @@ class ProductController extends Controller
         return $this->success('Product retrieved successfully', $product);
     }
 
-    public function updateProduct (Request $request) {
+    public function updateProduct(Request $request) {
         $this->validate($request, [
             'product_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
             'stock' => 'required',
-            'status' => 'required',
             'category_id' => 'required'
         ]);
 
@@ -77,28 +75,25 @@ class ProductController extends Controller
             return $this->error('Product not found', 404);
         }
 
-        // delete existing image
-        if ($product->image) {
-            unlink(public_path('images/' . $product->image));
-        }
-
         // handle image upload
         if ($request->hasFile('image')) {
+            @unlink(public_path($product->image));
             $image = $request->file('image');
-            $image_name = time() . '.' . $image->extension();
+            $image_name = $product->id."-".time() . '.' . $image->extension();
             $image->move(public_path('images'), $image_name);
-            $product->image = $image_name;
+            $product->image = "images/" . $image_name;
         }
 
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
-        $product->status = $request->status;
+        // $product->status = $request->status;
         $product->category_id = $request->category_id;
         $product->save();
 
+        $product->category = Category::where('id', $request->category_id)->first();
+
         return $this->success('Product updated successfully', $product);
     }
-
 }
