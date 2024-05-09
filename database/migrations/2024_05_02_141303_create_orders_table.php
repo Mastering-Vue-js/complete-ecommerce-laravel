@@ -15,9 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('status')->default('pending');
-            $table->decimal('total', 8, 2);
             $table->string('payment_method')->nullable();
             $table->string('payment_status')->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('line1')->nullable();
+            $table->string('line2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

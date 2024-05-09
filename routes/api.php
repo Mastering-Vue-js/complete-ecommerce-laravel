@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WishListController;
 
@@ -65,6 +66,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
   Route::get('wishlist', [WishListController::class, 'getWishList']);
   Route::post('wishlist/add', [WishListController::class, 'addToWishList']);
   Route::delete('wishlist/delete/{id}', [WishListController::class, 'deleteWishList']);
+  
+  Route::post('orders/add', [OrderController::class, 'addOrder']);
 
   Route::get('logout', [AuthController::class, 'logout']);
   Route::get('user', [AuthController::class, 'user']);
