@@ -4,9 +4,11 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WishListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,16 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
+  Route::get('cart', [CartController::class, 'getCart']);
+  Route::post('cart/add', [CartController::class, 'addToCart']);
+  Route::post('cart/update', [CartController::class, 'updateCart']);
+  Route::delete('cart/delete/{id}', [CartController::class, 'deleteCart']);
+
+  Route::get('wishlist', [WishListController::class, 'getWishList']);
+  Route::post('wishlist/add', [WishListController::class, 'addToWishList']);
+  Route::delete('wishlist/delete/{id}', [WishListController::class, 'deleteWishList']);
+
   Route::get('logout', [AuthController::class, 'logout']);
   Route::get('user', [AuthController::class, 'user']);
 });
