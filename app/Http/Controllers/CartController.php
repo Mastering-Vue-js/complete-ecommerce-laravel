@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller {
     public function getCart(Request $request) {
-        $cart = Cart::where('user_id', $request->user()->id)->get();
+        $cart = Cart::with('product')->where('user_id', $request->user()->id)->get();
         return $this->success('Get cart', $cart);  
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class WishListController extends Controller {
     public function getWishList(Request $request) {
-        $wishlist = WishList::where('user_id', $request->user()->id)->get();
+        $wishlist = WishList::with('product')->where('user_id', $request->user()->id)->get();
         return $this->success('Get wishlist', $wishlist);
     }
 

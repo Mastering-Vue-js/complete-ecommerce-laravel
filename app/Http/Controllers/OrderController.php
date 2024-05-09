@@ -46,4 +46,12 @@ class OrderController extends Controller
 
         return $this->success('Add order', $order);
     }
+
+    public function getOrder(Request $request) {
+        $orders = Order::with('products')->where('user_id', $request->user()->id)->get();
+        // foreach($orders as $order){
+        //     $order->products;
+        // }
+        return $this->success('Get orders', $orders);
+    }
 }
