@@ -48,6 +48,10 @@ Route::group(['prefix' => 'admin'], function () {
       Route::post('products/update', [ProductController::class, 'updateProduct']);
       Route::delete('products/delete/{id}', [ProductController::class, 'deleteProduct']);
 
+      Route::get('orders', [OrderController::class, 'getAdminOrders']);
+      Route::get('orders/{id}', [OrderController::class, 'getAdminOrder']);
+      Route::post('orders/update', [OrderController::class, 'updateAdminOrder']);
+
       Route::get('coupon', [CouponController::class, 'getCoupons']);
       Route::post('coupon/add', [CouponController::class, 'addCoupons']);
       Route::post('coupon/update', [CouponController::class, 'updateCoupons']);

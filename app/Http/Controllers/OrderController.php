@@ -54,4 +54,31 @@ class OrderController extends Controller
         // }
         return $this->success('Get orders', $orders);
     }
+
+    public function getAdminOrders(Request $request) {
+        $orders = Order::with('products')->with('user')->get();
+        return $this->success('Get orders', $orders);
+    }
+
+    public function getAdminOrder(Request $request, $id) {
+        $order = Order::with('products')->with('user')->where('id', $id)->first();
+        return $this->success('Get single order', $order);
+    }
+
+    public function updateAdminOrder(Request $request) {
+        $order = Order::find($request->id);
+        $order->status = $request->status;
+        $order->notes = $request->notes;
+        $order->save();
+
+        $products = $request->products;
+
+        foreach($products as $product){
+            $OrderProduct = OrderProduct::where('order_id', $order->id)->where('product_id', $product['id'])->first();
+            $OrderProduct->quantity = $product['pivot']['quantity'];
+            $OrderProduct->save();
+        }
+
+        return $this->success('Update order', $order);
+    }
 }
