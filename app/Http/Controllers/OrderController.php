@@ -28,9 +28,10 @@ class OrderController extends Controller
         $order->country = $request->country;
         $order->coupon = $request->coupon;
         $order->notes = $request->notes;
+        $order->save();
 
         $cart = Cart::where('user_id', $request->user()->id)->get();
-        
+
         foreach($cart as $item) {
             $OrderProduct = new OrderProduct();
             $OrderProduct->order_id = $order->id;

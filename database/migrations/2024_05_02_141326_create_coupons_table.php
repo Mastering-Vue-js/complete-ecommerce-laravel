@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('type');
-            $table->decimal('value', 8, 2);
+            $table->decimal('discount', 8, 2);
             $table->timestamps();
         });
     }

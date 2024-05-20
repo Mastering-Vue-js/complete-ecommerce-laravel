@@ -261,12 +261,12 @@
 							"formdata": [
 								{
 									"key": "cart_id",
-									"value": "1",
+									"value": "24",
 									"type": "text"
 								},
 								{
 									"key": "quantity",
-									"value": "3",
+									"value": "5",
 									"type": "text"
 								}
 							]
@@ -300,6 +300,111 @@
 								"cart",
 								"delete",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coupon",
+			"item": [
+				{
+					"name": "get Coupon",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/admin/coupon",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"coupon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "code",
+									"value": "10OFF",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "fixed",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/admin/coupon/add",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"coupon",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apply Coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "code",
+									"value": "10OFF",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "lsdhjflsdjflds",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/verify-coupon",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"verify-coupon"
 							]
 						}
 					},
@@ -568,6 +673,83 @@
 							"path": [
 								"api",
 								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get orders (admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/admin/orders",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single order (admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/admin/orders/1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Single order (admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/admin/orders/update",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders",
+								"update"
 							]
 						}
 					},
