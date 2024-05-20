@@ -53,9 +53,9 @@ Route::group(['prefix' => 'admin'], function () {
       Route::post('orders/update', [OrderController::class, 'updateAdminOrder']);
 
       Route::get('coupon', [CouponController::class, 'getCoupons']);
-      Route::post('coupon/add', [CouponController::class, 'addCoupons']);
-      Route::post('coupon/update', [CouponController::class, 'updateCoupons']);
-      Route::delete('coupon/delete/{id}', [CouponController::class, 'deleteCoupons']);
+      Route::post('coupon/add', [CouponController::class, 'addCoupon']);
+      Route::post('coupon/update', [CouponController::class, 'updateCoupon']);
+      Route::delete('coupon/delete/{id}', [CouponController::class, 'deleteCoupon']);
     });
   });
 });
@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
   Route::get('wishlist', [WishListController::class, 'getWishList']);
   Route::post('wishlist/add', [WishListController::class, 'addToWishList']);
   Route::delete('wishlist/delete/{id}', [WishListController::class, 'deleteWishList']);
+
+  Route::post('verify-coupon', [CouponController::class, 'verifyCoupon']);
   
   Route::get('orders', [OrderController::class, 'getOrder']);
   Route::post('orders/add', [OrderController::class, 'addOrder']);

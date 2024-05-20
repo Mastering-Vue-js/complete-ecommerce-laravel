@@ -21,6 +21,8 @@ class Order extends Model
         'line2',
         'city',
         'country',
+        'coupon',
+        'total',
         'notes'
     ];
 

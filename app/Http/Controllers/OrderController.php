@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
+use App\Models\Coupon;
 
 class OrderController extends Controller
 {
@@ -25,11 +26,12 @@ class OrderController extends Controller
         $order->line2 = $request->line2;
         $order->city = $request->city;
         $order->country = $request->country;
+        $order->coupon = $request->coupon;
         $order->notes = $request->notes;
-        $order->save();
 
         $cart = Cart::where('user_id', $request->user()->id)->get();
-        foreach($cart as $item){
+        
+        foreach($cart as $item) {
             $OrderProduct = new OrderProduct();
             $OrderProduct->order_id = $order->id;
             $OrderProduct->product_id = $item->product_id;
@@ -42,9 +44,24 @@ class OrderController extends Controller
 
         Cart::where('user_id', $request->user()->id)->delete();
 
-        $order->total = $total;
+        $order->total = $this->calculateTotals($request->coupon, $total);
+        $order->save();
 
         return $this->success('Add order', $order);
+    }
+
+    public function calculateTotals($coupon, $total) {
+        if($coupon){
+            $coupon = Coupon::where('code', $coupon)->first();
+            if($coupon){
+                if($coupon->type == 'fixed'){
+                    $total = $total - $coupon->discount;
+                } else {
+                    $total = $total - ($total * $coupon->discount / 100);
+                }
+            }
+        }
+        return $total;
     }
 
     public function getOrder(Request $request) {

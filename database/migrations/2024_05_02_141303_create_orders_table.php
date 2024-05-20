@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('line2')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->string('coupon')->nullable();
+            $table->decimal('total', 8, 2)->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });
