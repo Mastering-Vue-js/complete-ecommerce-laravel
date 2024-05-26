@@ -40,7 +40,7 @@ class CategoryController extends Controller
         if (!$category) {
             return $this->error('Category not found', 404);
         }
-        @unlink(public_path('images/' . $category->image));
+        @unlink(public_path($category->image));
         $category->delete();
         return $this->success('Category deleted successfully');
     }

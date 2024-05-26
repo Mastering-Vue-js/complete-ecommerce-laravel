@@ -47,7 +47,7 @@ class ProductController extends Controller {
         if (!$product) {
             return $this->error('Product not found', 404);
         }
-        unlink(public_path('images/' . $product->image));
+        @unlink(public_path($product->image));
         $product->delete();
         return $this->success('Product deleted successfully');
     }
